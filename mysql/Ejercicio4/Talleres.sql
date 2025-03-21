@@ -65,4 +65,10 @@ ADD modelo VARCHAR(50);
 -- Primero hay que eliminar la pk.
 
 ALTER TABLE TRABAJOS
-CONSTRAINT pk_trabajos PRIMARY KEY (mat, dni);
+DROP COLUMN id_trabajo;
+
+ALTER TABLE TRABAJOS
+ADD CONSTRAINT pk_trabajos PRIMARY KEY (mat, dni);
+
+ALTER TABLE COCHES
+MODIFY COLUMN an_fab VARCHAR(2);
