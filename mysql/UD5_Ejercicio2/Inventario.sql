@@ -126,6 +126,42 @@ GROUP BY categoria;
 
 -- 15.Encuentra todos los productos que tienen el mismo precio unitario que otro producto.
 SELECT nombre_producto, precio_unitario 
-FROM productos;
+FROM productos
+WHERE precio_unitario IN (
+    SELECT  precio_unitario
+    FROM productos
+    GROUP BY precio_unitario
+    HAVING COUNT(*) > 1
+)
+ORDER BY precio_unitario;
+
+-- 16.Encuentra todos los productos cuyo nombre contiene al menos tres vocales.
+-- Este no se hace.
+
+/*SELECT nombre_producto
+FROM productos
+WHERE nombre_producto 
+        (LENGTH(nombre_producto) - LENGTH(REPLACE(LOWER(nombre_producto), 'a', ''))) 
+ >=3;*/
+
+ SELECT nombre_producto
+FROM productos
+WHERE 
+    (LENGTH(nombre_producto) - LENGTH(REPLACE(LOWER(nombre_producto), 'a', ''))) +
+    (LENGTH(nombre_producto) - LENGTH(REPLACE(LOWER(nombre_producto), 'e', ''))) +
+    (LENGTH(nombre_producto) - LENGTH(REPLACE(LOWER(nombre_producto), 'i', ''))) +
+    (LENGTH(nombre_producto) - LENGTH(REPLACE(LOWER(nombre_producto), 'o', ''))) +
+    (LENGTH(nombre_producto) - LENGTH(REPLACE(LOWER(nombre_producto), 'u', ''))) >= 3;
+
+SELECT nombre_producto
+FROM productos
+WHERE nombre_producto LIKE ("%a%e%") OR ("%e%a%");
+
+-- 17.Encuentra todos los productos que tienen el mismo nombre de categoría que otro producto.
+SELECT nombre_producto
+FROM productos
+WHERE nombre_producto IN (
+    
+)
 
 -- SELECT * FROM productos LIMIT 3;
