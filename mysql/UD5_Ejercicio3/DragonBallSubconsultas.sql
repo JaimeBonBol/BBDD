@@ -21,7 +21,8 @@ INSERT INTO Guerreros (nombre, raza, poder) VALUES
 ('Freezer', 'Monstruo', 10000),
 ('Majin Boo', 'Monstruo', 9000),
 ('Gotenks', 'Saiyajin', 7000),
-('Yamcha', 'Humano', 5000);
+('Yamcha', 'Humano', 5000),
+('Pepe', 'Humano', 5000);
 
 -- Crear la tabla Tecnicas
 CREATE TABLE IF NOT EXISTS Tecnicas (
@@ -46,7 +47,10 @@ INSERT INTO Tecnicas (nombre, tipo, poder, id_guerrero) VALUES
 ('Death Beam', 'Ataque', 8000, 7),
 ('Kamehameha', 'Ataque', 8000, 8),
 ('Death Ball', 'Ataque', 9000, 9),
-('Kamehameha', 'Ataque', 7000, 10);
+('Kamehameha', 'Ataque', 7000, 10),
+('Kamehameha', 'Ataque', 7000, 11),
+('Kamehameha', 'Ataque', 7000, 11),
+('Kamehameha', 'Ataque', 7000, 11);
 
 -- Mostrar las tablas creadas
 SHOW TABLES;
@@ -109,3 +113,21 @@ WHERE poder IN (
 ORDER BY poder DESC;
 
 -- 8.Encuentra el nombre del guerrero con mayor número de técnicas.
+
+-- He conseguido sacar los guerreros que tienen tecnicas
+SELECT nombre
+FROM Guerreros
+WHERE id IN (
+    SELECT id_guerrero
+    FROM Tecnicas
+    GROUP BY id_guerrero
+    ORDER BY COUNT(id)
+);
+
+-- 9.Calcula el promedio de poder de los guerreros Namekianos.
+SELECT raza, AVG(poder) AS poder_promedio
+FROM Guerreros
+WHERE raza = 'Namekiano'
+GROUP BY raza;
+
+-- 10.Encuentra los guerreros que tienen una técnica de ataque con “Beam” en el nombre.
